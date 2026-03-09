@@ -1,0 +1,109 @@
+{
+  "payload": {
+    "formula": {
+      "latex": "N(t) = N_0 \\cdot e^{-\\lambda t}",
+      "description": "Exponential Decay: Radioactive substance mass over time",
+      "domain": "physics"
+    },
+    "annotations": [
+      {
+        "id": "result",
+        "latexFragment": "N(t)",
+        "label": "Remaining mass",
+        "description": "The quantity of substance remaining at time t"
+      },
+      {
+        "id": "initial",
+        "latexFragment": "N_0",
+        "label": "Initial mass",
+        "description": "The starting quantity of substance at t=0"
+      },
+      {
+        "id": "decay",
+        "latexFragment": "e^{-\\lambda t}",
+        "label": "Decay factor",
+        "description": "The exponential decay factor — determines how quickly the substance decays"
+      },
+      {
+        "id": "rate",
+        "latexFragment": "\\lambda",
+        "label": "Decay constant",
+        "description": "The rate of decay — higher values mean faster decay"
+      }
+    ],
+    "steps": [
+      {
+        "id": "step-1",
+        "title": "The Initial Condition",
+        "narrative": "At time t=0, we start with N₀ units of our substance. This is our starting point — the full, undecayed quantity.",
+        "algebraDetail": "N(0) = N_0 \\cdot e^{-\\lambda \\cdot 0} = N_0 \\cdot e^{0} = N_0 \\cdot 1 = N_0",
+        "highlightIds": ["initial"],
+        "graphState": {
+          "data": [],
+          "axes": {
+            "x": { "label": "Time (t)", "domain": [0, 10] },
+            "y": { "label": "N(t)", "domain": [0, 110] }
+          },
+          "highlightRegions": [
+            { "annotationId": "initial", "type": "point", "coords": { "x": 0, "y": 100 } }
+          ]
+        }
+      },
+      {
+        "id": "step-2",
+        "title": "The Decay Constant λ",
+        "narrative": "The decay constant λ controls how fast the substance decays. A larger λ means faster decay. It's the probability per unit time that any given atom will decay.",
+        "algebraDetail": "\\text{Half-life: } t_{1/2} = \\frac{\\ln 2}{\\lambda} \\approx \\frac{0.693}{\\lambda}",
+        "highlightIds": ["rate", "decay"],
+        "graphState": {
+          "data": [],
+          "axes": {
+            "x": { "label": "Time (t)", "domain": [0, 10] },
+            "y": { "label": "N(t)", "domain": [0, 110] }
+          }
+        }
+      },
+      {
+        "id": "step-3",
+        "title": "The Exponential Decay Curve",
+        "narrative": "As time progresses, the decay factor e^(-λt) shrinks exponentially. The curve never reaches zero — it asymptotically approaches it. Each equal time interval reduces the remaining quantity by the same fraction.",
+        "algebraDetail": "N(t) = 100 \\cdot e^{-0.3t}",
+        "highlightIds": ["decay", "result"],
+        "graphState": {
+          "data": [],
+          "axes": {
+            "x": { "label": "Time (t)", "domain": [0, 10] },
+            "y": { "label": "N(t)", "domain": [0, 110] }
+          }
+        }
+      },
+      {
+        "id": "step-4",
+        "title": "Half-Life in Action",
+        "narrative": "The half-life is the time it takes for half the substance to decay. For λ=0.3, the half-life is about 2.31 time units. After one half-life, 50% remains. After two, 25%. After three, 12.5%.",
+        "algebraDetail": "t_{1/2} = \\frac{\\ln 2}{0.3} \\approx 2.31 \\quad \\Rightarrow \\quad N(2.31) = 100 \\cdot e^{-0.3 \\cdot 2.31} \\approx 50",
+        "highlightIds": ["result", "rate"],
+        "graphState": {
+          "data": [],
+          "axes": {
+            "x": { "label": "Time (t)", "domain": [0, 10] },
+            "y": { "label": "N(t)", "domain": [0, 110] }
+          },
+          "highlightRegions": [
+            { "annotationId": "result", "type": "point", "coords": { "x": 2.31, "y": 50 } }
+          ]
+        }
+      }
+    ],
+    "parameters": [
+      { "name": "N_0", "label": "Initial mass (N₀)", "min": 1, "max": 200, "default": 100, "step": 1 },
+      { "name": "lambda", "label": "Decay constant (λ)", "min": 0.01, "max": 2, "default": 0.3, "step": 0.01 }
+    ],
+    "graph": {
+      "type": "function-plot",
+      "config": {
+        "expression": "N_0 * exp(-lambda * x)"
+      }
+    }
+  }
+}
