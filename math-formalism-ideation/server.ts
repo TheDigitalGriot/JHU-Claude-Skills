@@ -17,7 +17,7 @@ const DIST_DIR = import.meta.filename.endsWith(".ts")
   : import.meta.dirname;
 
 const GraphStateSchema = z.object({
-  data: z.array(z.record(z.unknown())),
+  data: z.array(z.record(z.string(), z.unknown())),
   axes: z
     .object({
       x: z.object({ label: z.string().optional(), domain: z.tuple([z.number(), z.number()]).optional() }).optional(),
@@ -29,7 +29,7 @@ const GraphStateSchema = z.object({
       z.object({
         annotationId: z.string(),
         type: z.enum(["point", "region", "line"]),
-        coords: z.record(z.number()),
+        coords: z.record(z.string(), z.number()),
       }),
     )
     .optional(),
@@ -86,7 +86,7 @@ const FormulaPayloadSchema = z.object({
       "bar",
       "surface-3d",
     ]),
-    config: z.record(z.unknown()),
+    config: z.record(z.string(), z.unknown()),
   }),
 });
 
@@ -134,7 +134,7 @@ export function createServer(): McpServer {
       title: "Update Formula Parameters",
       description: "Update formula parameters from the app UI.",
       inputSchema: {
-        parameterValues: z.record(z.number()),
+        parameterValues: z.record(z.string(), z.number()),
       },
       _meta: {
         ui: {
