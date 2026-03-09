@@ -1,0 +1,301 @@
+:root {
+  color-scheme: light dark;
+
+  /* Host style variable fallbacks */
+  --color-text-primary: light-dark(#1f2937, #f3f4f6);
+  --color-text-secondary: light-dark(#6b7280, #9ca3af);
+  --color-background-primary: light-dark(#ffffff, #111111);
+  --color-background-secondary: light-dark(#f9fafb, #1a1a1a);
+  --color-background-tertiary: light-dark(#f3f4f6, #222222);
+  --color-border: light-dark(#e5e7eb, #333333);
+  --color-ring-primary: light-dark(#3b82f6, #60a5fa);
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-text-md-size: 1rem;
+  --font-text-md-line-height: 1.5;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: var(--font-sans);
+  font-size: var(--font-text-md-size);
+  line-height: var(--font-text-md-line-height);
+  color: var(--color-text-primary);
+  background: var(--color-background-primary);
+  height: 100%;
+  overflow: hidden;
+}
+
+/* === MAIN LAYOUT === */
+.main {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* === HEADER === */
+.header {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header h1 {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xs);
+}
+
+.header p {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+/* === FORMULA BAR (fixed row) === */
+.formula-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.formula-bar .katex-display {
+  margin: 0;
+}
+
+.parameter-values {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* === CONTENT AREA (split panels) === */
+.content-area {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  overflow: hidden;
+}
+
+/* Scroll panel (left) */
+.scroll-panel {
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  scroll-behavior: smooth;
+}
+
+/* Step cards */
+.step-card {
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card.active {
+  border-color: var(--color-ring-primary);
+  box-shadow: 0 0 0 2px var(--color-ring-primary), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-card .step-title {
+  font-weight: var(--font-weight-bold);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.step-card .step-number {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.step-card .step-narrative {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.step-card .expand-toggle {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  font-size: 0.8rem;
+  color: var(--color-ring-primary);
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+}
+
+.step-card .expand-toggle:hover {
+  text-decoration: underline;
+}
+
+.step-card .algebra-detail {
+  display: none;
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-background-tertiary);
+  border-radius: var(--border-radius-md);
+  font-size: 0.85rem;
+}
+
+.step-card .algebra-detail.expanded {
+  display: block;
+}
+
+/* Sticky panel (right) */
+.sticky-panel {
+  position: sticky;
+  top: 0;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  border-left: 1px solid var(--color-border);
+}
+
+.graph-container {
+  flex: 1;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.graph-container svg {
+  width: 100%;
+  height: auto;
+}
+
+.sliders-container {
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.slider-group {
+  margin-bottom: var(--spacing-sm);
+}
+
+.slider-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.slider-group input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-ring-primary);
+}
+
+.slider-group .slider-value {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+/* === CONTROLS BAR === */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background-secondary);
+}
+
+.controls-bar button {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  transition: background 0.15s ease;
+}
+
+.controls-bar button:hover:not(:disabled) {
+  background: var(--color-background-tertiary);
+}
+
+.controls-bar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#step-indicator {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* === FORMULA HIGHLIGHT SPANS === */
+.formula-bar [data-annotation-id] {
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out, filter 0.3s ease-out;
+  display: inline-block;
+}
+
+.formula-bar [data-annotation-id].inactive {
+  opacity: 0.4;
+}
+
+.formula-bar [data-annotation-id].active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .content-area {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .sticky-panel {
+    position: relative;
+    border-left: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 50vh;
+  }
+
+  .scroll-panel {
+    max-height: 50vh;
+  }
+}
+
+/* === LOADING STATE === */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
