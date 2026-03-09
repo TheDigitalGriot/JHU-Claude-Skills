@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Math Visualizer</title>
+</head>
+<body>
+  <main class="main">
+    <header class="header" id="header">
+      <h1 id="formula-title">Math Visualizer</h1>
+      <p id="formula-description">Waiting for formula...</p>
+    </header>
+
+    <section class="formula-bar" id="formula-bar">
+      <div id="formula-display"></div>
+      <div id="parameter-values" class="parameter-values"></div>
+    </section>
+
+    <div class="content-area">
+      <div class="scroll-panel" id="scroll-panel"></div>
+      <div class="sticky-panel" id="sticky-panel">
+        <div class="graph-container" id="graph-container"></div>
+        <div class="sliders-container" id="sliders-container"></div>
+      </div>
+    </div>
+
+    <nav class="controls-bar" id="controls-bar">
+      <button id="btn-prev" disabled>&#9664; Prev</button>
+      <span id="step-indicator">Step 0 of 0</span>
+      <button id="btn-next" disabled>Next &#9654;</button>
+      <button id="btn-play" disabled>&#9654; Play</button>
+    </nav>
+  </main>
+  <script type="module" src="/src/mcp-app.ts"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "name": "math-formalism-ideation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development concurrently \"cross-env INPUT=mcp-app.html vite build --watch\" \"tsx --watch main.ts\"",
+    "build": "tsc --noEmit && cross-env INPUT=mcp-app.html vite build",
+    "serve": "tsx main.ts",
+    "start": "cross-env NODE_ENV=development npm run build && npm run serve",
+    "serve:stdio": "tsx main.ts --stdio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.2.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@observablehq/plot": "^0.6.17",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "gsap": "^3.14.2",
+    "katex": "^0.16.38",
+    "mathjs": "^15.1.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.5",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-singlefile": "^2.3.0"
+  }
+}
