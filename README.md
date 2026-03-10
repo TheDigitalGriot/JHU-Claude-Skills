@@ -2,7 +2,7 @@
 
 A laboratory for AI-assisted tools and interactive experiments built during the Johns Hopkins University Applied AI certificate program. What started as a collection of Claude Code skills has grown into a proving ground for ideas at the intersection of mathematical visualization, motion design, and agentic AI.
 
-Built by [The Digital Griot](https://github.com/TheDigitalGriot), with mathematical formalism inspiration from [Sean](https://github.com/altivection01).
+Built by [The Digital Griot](https://github.com/TheDigitalGriot), with mathematical formalism inspiration from [@altivection01](https://github.com/altivection01).
 
 ---
 
@@ -106,4 +106,4 @@ jhu-claude-skills/
 ## Credits
 
 - **The Digital Griot** — concept, design, implementation
-- **[Sean](https://github.com/altivection01)** — mathematical formalism inspiration, statistics domain expertise
+- **[@altivection01](https://github.com/altivection01)** — mathematical formalism inspiration, statistics domain expertise
