@@ -1,0 +1,36 @@
+{
+  "prompt": "Show me the normal distribution and how mean and standard deviation shape the bell curve",
+  "thinking": "I'll visualize the Gaussian distribution f(x) = (1/σ√(2π))·e^(-(x-μ)²/(2σ²)), showing how μ shifts and σ stretches the bell curve...",
+  "toolCallName": "visualize_formula",
+  "response": "The normal distribution — the famous bell curve — is one of the most important distributions in statistics. Its shape is entirely determined by two parameters: the mean μ (which centers the curve) and the standard deviation σ (which controls its width).\n\nI've set up an interactive visualization where you can:\n- Step through the anatomy of the bell curve\n- Slide μ to shift the center left or right\n- Adjust σ to make the curve taller and narrower (small σ) or shorter and wider (large σ)\n\nThe key insight: about 68% of data falls within one σ of the mean, 95% within two, and 99.7% within three. This is the empirical rule that makes the normal distribution so powerful in practice.",
+  "payload": {
+    "formula": {
+      "latex": "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} \\cdot e^{-\\frac{(x - \\mu)^2}{2\\sigma^2}}",
+      "description": "Normal Distribution: The Gaussian probability density function",
+      "domain": "statistics"
+    },
+    "annotations": [
+      {"id": "output", "latexFragment": "f(x)", "label": "Probability density", "description": "The probability density at point x"},
+      {"id": "normalizer", "latexFragment": "\\frac{1}{\\sigma\\sqrt{2\\pi}}", "label": "Normalization constant", "description": "Ensures the total area under the curve equals 1"},
+      {"id": "exponent", "latexFragment": "e^{-\\frac{(x - \\mu)^2}{2\\sigma^2}}", "label": "Gaussian kernel", "description": "The bell-shaped exponential term — creates the symmetric falloff from the mean"},
+      {"id": "mean", "latexFragment": "\\mu", "label": "Mean", "description": "The center of the distribution — where the peak occurs"},
+      {"id": "std", "latexFragment": "\\sigma", "label": "Standard deviation", "description": "Controls the width of the bell curve — larger σ means more spread"}
+    ],
+    "steps": [
+      {"id": "step-1", "title": "The Bell Curve Shape", "narrative": "The normal distribution creates a symmetric, bell-shaped curve centered at the mean μ. The peak represents the most likely value, with probability tapering symmetrically in both directions.", "algebraDetail": "f(\\mu) = \\frac{1}{\\sigma\\sqrt{2\\pi}} \\cdot e^{0} = \\frac{1}{\\sigma\\sqrt{2\\pi}}", "highlightIds": ["output", "mean"], "graphState": {"data": [], "axes": {"x": {"label": "x", "domain": [-5, 5]}, "y": {"label": "f(x)", "domain": [0, 0.5]}}, "highlightRegions": [{"annotationId": "mean", "type": "point", "coords": {"x": 0, "y": 0.3989}}]}},
+      {"id": "step-2", "title": "The Mean μ Shifts the Center", "narrative": "Changing μ slides the entire curve left or right without changing its shape. The mean is both the center of symmetry and the expected value of the distribution.", "algebraDetail": "\\text{When } \\mu = 0: f(0) = \\frac{1}{\\sigma\\sqrt{2\\pi}} \\quad \\text{(peak at origin)}", "highlightIds": ["mean"], "graphState": {"data": [], "axes": {"x": {"label": "x", "domain": [-5, 5]}, "y": {"label": "f(x)", "domain": [0, 0.5]}}}},
+      {"id": "step-3", "title": "Standard Deviation σ Controls Width", "narrative": "A smaller σ produces a tall, narrow peak — the data is tightly clustered around the mean. A larger σ produces a short, wide curve — the data is more spread out. The area under the curve always equals 1.", "algebraDetail": "\\sigma = 1: f(\\mu) \\approx 0.399 \\quad \\sigma = 2: f(\\mu) \\approx 0.199 \\quad \\sigma = 0.5: f(\\mu) \\approx 0.798", "highlightIds": ["std", "normalizer"], "graphState": {"data": [], "axes": {"x": {"label": "x", "domain": [-5, 5]}, "y": {"label": "f(x)", "domain": [0, 0.85]}}}},
+      {"id": "step-4", "title": "The 68-95-99.7 Rule", "narrative": "The empirical rule: ~68% of data falls within 1σ of the mean, ~95% within 2σ, and ~99.7% within 3σ. This makes the normal distribution a powerful tool for understanding how data clusters and for detecting outliers.", "algebraDetail": "P(\\mu - \\sigma \\leq X \\leq \\mu + \\sigma) \\approx 0.6827 \\quad P(\\mu - 2\\sigma \\leq X \\leq \\mu + 2\\sigma) \\approx 0.9545", "highlightIds": ["std", "exponent"], "graphState": {"data": [], "axes": {"x": {"label": "x", "domain": [-5, 5]}, "y": {"label": "f(x)", "domain": [0, 0.5]}}, "highlightRegions": [{"annotationId": "std", "type": "region", "coords": {"x1": -1, "x2": 1}}]}}
+    ],
+    "parameters": [
+      {"name": "mu", "label": "Mean (μ)", "min": -3, "max": 3, "default": 0, "step": 0.1},
+      {"name": "sigma", "label": "Standard deviation (σ)", "min": 0.2, "max": 3, "default": 1, "step": 0.1}
+    ],
+    "graph": {
+      "type": "distribution",
+      "config": {
+        "expression": "(1 / (sigma * sqrt(2 * pi))) * exp(-((x - mu)^2) / (2 * sigma^2))"
+      }
+    }
+  }
+}
