@@ -8,29 +8,34 @@ import {
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import "./global.css";
 
-import type { FormulaPayload } from "./types.js";
+import type { FormulaPayloadV2 } from "./types.js";
 import { renderFormulaBar, updateParameterDisplay } from "./renderer/formula-bar.js";
 import { renderSteps } from "./renderer/steps.js";
-import { renderGraph } from "./renderer/graph.js";
 import { renderSliders } from "./renderer/sliders.js";
 import {
   initControls,
-  updateControls,
-  enableControls,
   setPlaying,
   startAutoPlay,
   stopAutoPlay,
 } from "./renderer/controls.js";
-import {
-  setupTimeline,
-  scrollToStep,
-  getCurrentStep,
-  teardownTimeline,
-} from "./animation/timeline.js";
 import { evaluateWithParameters } from "./eval/evaluator.js";
+import { registerAllRenderers } from "./chart/renderers/index.js";
+import { registerAllPrimitives } from "./scene/primitives/index.js";
+import {
+  initStage,
+  handlePartialPayload,
+  handleFullPayload,
+  navigateToStep,
+  canAdjustSliders,
+  updateChartForParameters,
+  teardownStage,
+  getCurrentStep,
+  getState,
+} from "./stage/manager.js";
+import { getStepGraphType } from "./stage/transition-manager.js";
 
 // State
-let currentPayload: FormulaPayload | null = null;
+let currentPayload: FormulaPayloadV2 | null = null;
 let stepCards: HTMLElement[] = [];
 let parameterValues: Record<string, number> = {};
 
@@ -52,9 +57,9 @@ function handleHostContextChanged(ctx: McpUiHostContext) {
 }
 
 /**
- * Fully render a FormulaPayload into the UI.
+ * Fully render a FormulaPayloadV2 into the UI.
  */
-function renderPayload(payload: FormulaPayload): void {
+async function renderPayload(payload: FormulaPayloadV2): Promise<void> {
   currentPayload = payload;
 
   // Header
@@ -67,38 +72,29 @@ function renderPayload(payload: FormulaPayload): void {
   // Steps
   stepCards = renderSteps(payload.steps);
 
-  // Graph (initial state from first step)
-  if (payload.steps.length > 0) {
-    renderGraph(payload, payload.steps[0].graphState);
-  }
-
   // Sliders
   parameterValues = renderSliders(payload.parameters, (values) => {
+    if (!canAdjustSliders()) return;
     parameterValues = values;
     updateParameterDisplay(payload.parameters, values);
 
-    // Re-evaluate graph with new parameters
     if (currentPayload && currentPayload.steps.length > 0) {
       const currentStep = getCurrentStep();
+      const step = currentPayload.steps[currentStep];
+      const graphType = getStepGraphType(step, currentPayload.graph.type);
       const updatedGraphState = evaluateWithParameters(
         currentPayload,
         values,
-        currentPayload.steps[currentStep].graphState,
+        step.graphState,
       );
-      renderGraph(currentPayload, updatedGraphState);
+      updateChartForParameters(graphType, updatedGraphState, currentPayload.graph.config);
     }
   });
 
   updateParameterDisplay(payload.parameters, parameterValues);
 
-  // Enable controls
-  enableControls();
-  updateControls(0, payload.steps.length);
-
-  // Set up scroll-driven timeline (after DOM is populated)
-  requestAnimationFrame(() => {
-    setupTimeline(stepCards, payload);
-  });
+  // Hand off to stage manager for the reveal sequence
+  await handleFullPayload(payload, stepCards);
 }
 
 // === MCP App Setup ===
@@ -108,26 +104,27 @@ const app = new App({ name: "Math Visualizer", version: "1.0.0" });
 // Register handlers BEFORE connecting
 
 app.onteardown = async () => {
-  teardownTimeline();
+  teardownStage();
   stopAutoPlay();
   return {};
 };
 
 app.ontoolinputpartial = (params) => {
-  // Progressive rendering: show formula bar as soon as available
-  const partial = params.arguments?.payload as Partial<FormulaPayload> | undefined;
+  const partial = params.arguments?.payload as Partial<FormulaPayloadV2> | undefined;
   if (partial?.formula?.latex) {
     headerTitle.textContent = partial.formula.description ?? "Loading...";
     try {
       renderFormulaBar(partial.formula.latex, partial.annotations ?? []);
-    } catch {
-      // Partial KaTeX may fail — that's fine
-    }
+    } catch { /* Partial KaTeX may fail */ }
+  }
+  // Feed partial to stage manager for loading scene
+  if (partial) {
+    handlePartialPayload(partial);
   }
 };
 
 app.ontoolinput = (params) => {
-  const payload = params.arguments?.payload as FormulaPayload | undefined;
+  const payload = params.arguments?.payload as FormulaPayloadV2 | undefined;
   if (payload) {
     renderPayload(payload);
   }
@@ -135,7 +132,7 @@ app.ontoolinput = (params) => {
 
 app.ontoolresult = (result: CallToolResult) => {
   // Handle updates from update_formula_parameters or re-invocations
-  const payload = result.structuredContent as FormulaPayload | undefined;
+  const payload = result.structuredContent as FormulaPayloadV2 | undefined;
   if (payload?.formula) {
     renderPayload(payload);
   }
@@ -154,30 +151,40 @@ initControls(
   (direction) => {
     if (!currentPayload) return;
     const current = getCurrentStep();
-    const next =
-      direction === "next"
-        ? Math.min(current + 1, currentPayload.steps.length - 1)
-        : Math.max(current - 1, 0);
-    scrollToStep(next, stepCards, currentPayload);
+    const next = direction === "next"
+      ? Math.min(current + 1, currentPayload.steps.length - 1)
+      : Math.max(current - 1, 0);
+    navigateToStep(next);
   },
   (playing) => {
     if (!currentPayload) return;
     if (playing) {
       startAutoPlay(() => {
         if (!currentPayload) return;
+        // Pause autoplay ticks while an interstitial is playing
+        if (getState() === "interstitial") return;
         const current = getCurrentStep();
         if (current >= currentPayload.steps.length - 1) {
           setPlaying(false);
           stopAutoPlay();
           return;
         }
-        scrollToStep(current + 1, stepCards, currentPayload);
+        navigateToStep(current + 1);
       });
     } else {
       stopAutoPlay();
     }
   },
 );
+
+// Register all chart renderers and scene primitives
+registerAllRenderers();
+registerAllPrimitives();
+
+// Initialize the stage manager
+const graphContainer = document.getElementById("graph-container")!;
+const scrollPanel = document.getElementById("scroll-panel")!;
+initStage(graphContainer, scrollPanel);
 
 // Connect to host
 app.connect().then(() => {

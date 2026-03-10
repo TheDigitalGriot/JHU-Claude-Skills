@@ -1,5 +1,5 @@
 import { evaluate } from "mathjs";
-import type { FormulaPayload, GraphState } from "../types.js";
+import type { FormulaPayload, FormulaPayloadV2, GraphState } from "../types.js";
 
 /**
  * Re-evaluate the graph data for a function-plot by sampling the
@@ -9,7 +9,7 @@ import type { FormulaPayload, GraphState } from "../types.js";
  * (the formula might not be a simple f(x)).
  */
 export function evaluateWithParameters(
-  payload: FormulaPayload,
+  payload: FormulaPayload | FormulaPayloadV2,
   parameterValues: Record<string, number>,
   graphState: GraphState,
 ): GraphState {
