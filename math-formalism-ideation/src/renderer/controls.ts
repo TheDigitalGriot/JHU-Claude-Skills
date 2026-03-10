@@ -60,3 +60,12 @@ export function stopAutoPlay(): void {
     playInterval = null;
   }
 }
+
+export function disableControls(): void {
+  const prevBtn = document.getElementById("btn-prev") as HTMLButtonElement;
+  const nextBtn = document.getElementById("btn-next") as HTMLButtonElement;
+  const playBtn = document.getElementById("btn-play") as HTMLButtonElement;
+  if (prevBtn) prevBtn.disabled = true;
+  if (nextBtn) nextBtn.disabled = true;
+  if (playBtn) playBtn.disabled = true;
+}

@@ -64,3 +64,23 @@ export function renderSliders(
 export function getSliderValues(): Record<string, number> {
   return { ...currentValues };
 }
+
+export function disableSliders(): void {
+  const container = document.getElementById("sliders-container");
+  if (container) {
+    container.classList.add("disabled");
+    container.querySelectorAll("input").forEach(input => {
+      (input as HTMLInputElement).disabled = true;
+    });
+  }
+}
+
+export function enableSliders(): void {
+  const container = document.getElementById("sliders-container");
+  if (container) {
+    container.classList.remove("disabled");
+    container.querySelectorAll("input").forEach(input => {
+      (input as HTMLInputElement).disabled = false;
+    });
+  }
+}

@@ -1,5 +1,5 @@
 import katex from "katex";
-import type { Step } from "../types.js";
+import type { StepV2 } from "../types.js";
 
 const scrollPanel = document.getElementById("scroll-panel")!;
 
@@ -7,7 +7,7 @@ const scrollPanel = document.getElementById("scroll-panel")!;
  * Render all step cards into the scroll panel.
  * Returns the created card elements for ScrollTrigger binding.
  */
-export function renderSteps(steps: Step[]): HTMLElement[] {
+export function renderSteps(steps: StepV2[]): HTMLElement[] {
   scrollPanel.innerHTML = "";
   const cards: HTMLElement[] = [];
 
@@ -30,29 +30,31 @@ export function renderSteps(steps: Step[]): HTMLElement[] {
     narrativeEl.className = "step-narrative";
     narrativeEl.textContent = step.narrative;
 
-    const toggleBtn = document.createElement("button");
-    toggleBtn.className = "expand-toggle";
-    toggleBtn.textContent = "Show algebra \u25B8";
-
-    const algebraEl = document.createElement("div");
-    algebraEl.className = "algebra-detail";
-
-    // Render algebraic detail as KaTeX
+    // Only show algebra toggle if algebraDetail is present
     if (step.algebraDetail) {
+      const toggleBtn = document.createElement("button");
+      toggleBtn.className = "expand-toggle";
+      toggleBtn.textContent = "Show algebra \u25B8";
+
+      const algebraEl = document.createElement("div");
+      algebraEl.className = "algebra-detail";
+
       katex.render(step.algebraDetail, algebraEl, {
         displayMode: true,
         throwOnError: false,
       });
+
+      toggleBtn.addEventListener("click", () => {
+        const isExpanded = algebraEl.classList.toggle("expanded");
+        toggleBtn.textContent = isExpanded
+          ? "Hide algebra \u25BE"
+          : "Show algebra \u25B8";
+      });
+
+      card.append(numberEl, titleEl, narrativeEl, toggleBtn, algebraEl);
+    } else {
+      card.append(numberEl, titleEl, narrativeEl);
     }
-
-    toggleBtn.addEventListener("click", () => {
-      const isExpanded = algebraEl.classList.toggle("expanded");
-      toggleBtn.textContent = isExpanded
-        ? "Hide algebra \u25BE"
-        : "Show algebra \u25B8";
-    });
-
-    card.append(numberEl, titleEl, narrativeEl, toggleBtn, algebraEl);
     scrollPanel.appendChild(card);
     cards.push(card);
   }
