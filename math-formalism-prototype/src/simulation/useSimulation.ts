@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useRef } from 'react';
+import { useReducer, useCallback, useRef, useMemo } from 'react';
 import type { SimulationState, Scenario } from '../types';
 import { type SimulationAction, runSimulation } from './engine';
 import { evaluateWithParameters } from '../eval/evaluator';
@@ -95,14 +95,18 @@ export function useSimulation() {
     dispatch({ type: 'TOGGLE_TOOL_EXPAND', messageId });
   }, []);
 
-  const graphData =
+  // Memoize graphData so it only recomputes when payload, params, or step change
+  // — NOT on every STREAM_TEXT dispatch (which fires every 30ms during typewriter)
+  const graphData = useMemo(() =>
     state.payload
       ? evaluateWithParameters(
           state.payload,
           state.parameterValues,
           state.payload.steps[state.activeStepIndex]?.graphState ?? { data: [] },
         )
-      : null;
+      : null,
+    [state.payload, state.parameterValues, state.activeStepIndex],
+  );
 
   return {
     state,

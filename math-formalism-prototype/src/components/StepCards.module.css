@@ -3,7 +3,6 @@
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-  scroll-behavior: smooth;
 }
 
 /* Each card has generous vertical padding to create scroll distance */
@@ -17,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   background: rgba(255, 255, 255, 0.02);
-  opacity: 0.3;
+  opacity: 0.4;
   cursor: pointer;
   transition: opacity 0.4s ease, border-left-color 0.4s ease, background 0.4s ease;
 }
@@ -25,13 +24,15 @@
 .card:hover { opacity: 0.6; }
 
 .cardActive {
-  border-left-color: #6366f1;
-  background: rgba(99, 102, 241, 0.08);
+  border-left-color: var(--step-accent, #6366f1);
+  /* Use gradient border when step highlights multiple annotations */
+  border-image: var(--step-gradient, none) 1;
+  background: color-mix(in srgb, var(--step-accent, #6366f1) 10%, transparent);
   opacity: 1;
 }
 
 .stepLabel { font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; transition: color 0.3s ease; }
-.stepLabelActive { color: #a78bfa; }
+.stepLabelActive { color: var(--step-accent, #a78bfa); }
 
 .title { font-size: 14px; font-weight: 600; margin: 6px 0; color: #e0e0e0; }
 
