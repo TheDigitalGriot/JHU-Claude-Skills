@@ -1,9 +1,0 @@
-[     302ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:5173/favicon.ico:0
-[   30691ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30691ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30691ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30692ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30738ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30738ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30739ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227
-[   30739ms] [WARNING] LaTeX-incompatible input and strict mode is set to 'warn': HTML extension is disabled on strict mode [htmlExtension] @ http://localhost:5173/node_modules/.vite/deps/katex.js?v=d9f19425:227

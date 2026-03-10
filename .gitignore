@@ -1,0 +1,18 @@
+# Superpowers/brainstorm artifacts
+.superpowers/
+.prism/
+.playwright-cli/
+
+# Nested superpowers artifacts
+**/.superpowers/
+**/docs/superpowers/
+
+# Test/sandbox apps
+math-formalism-ideation/basic-host/
+
+# Node
+node_modules/
+dist/
+
+# Build artifacts
+*.tsbuildinfo
