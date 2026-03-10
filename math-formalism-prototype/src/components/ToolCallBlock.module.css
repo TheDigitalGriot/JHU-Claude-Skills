@@ -1,0 +1,8 @@
+.wrapper { margin-left: 32px; margin-bottom: 12px; }
+.header { background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 8px; padding: 8px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px; color: #a78bfa; cursor: pointer; user-select: none; transition: background 0.15s; }
+.header:hover { background: rgba(99, 102, 241, 0.15); }
+.arrow { transition: transform 0.2s; font-size: 10px; }
+.arrowExpanded { transform: rotate(90deg); }
+.toolName { font-weight: 500; }
+.hint { color: #666; font-size: 11px; margin-left: auto; }
+.payload { margin-top: 4px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 0 0 8px 8px; padding: 12px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: #a0a0a0; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }

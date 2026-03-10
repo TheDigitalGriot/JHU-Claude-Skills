@@ -1,0 +1,6 @@
+.bar { padding: 12px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 8px; }
+.select { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; color: #ccc; padding: 8px 10px; font-size: 12px; min-width: 160px; cursor: pointer; }
+.select:focus { outline: none; border-color: rgba(99, 102, 241, 0.5); }
+.submit { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 8px; color: white; padding: 8px 20px; font-size: 13px; cursor: pointer; font-weight: 500; transition: opacity 0.15s; }
+.submit:hover { opacity: 0.9; }
+.submit:disabled { opacity: 0.4; cursor: not-allowed; }
