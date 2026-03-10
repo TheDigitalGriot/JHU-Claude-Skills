@@ -7,6 +7,9 @@
 **/.superpowers/
 **/docs/superpowers/
 
+# Reference material (local only)
+ref/
+
 # Test/sandbox apps
 math-formalism-ideation/basic-host/
 
