@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import type { MutableRefObject } from 'react';
 import type { SimulationState, Scenario, GraphState } from '../types';
 
 interface SimulationContextValue {
@@ -9,6 +10,7 @@ interface SimulationContextValue {
   updateParameter: (name: string, value: number) => void;
   togglePlay: () => void;
   toggleToolExpand: (messageId: string) => void;
+  scrollToStepRef: MutableRefObject<((index: number) => void) | null>;
 }
 
 export const SimulationContext = createContext<SimulationContextValue | null>(null);

@@ -16,9 +16,11 @@ export function VisualizationPanel() {
       <FormulaBar />
       <div className={styles.contentArea}>
         <StepCards />
-        <GraphPanel />
+        <div className={styles.stickyRight}>
+          <GraphPanel />
+          <ParameterSliders />
+        </div>
       </div>
-      <ParameterSliders />
       <StepControls />
     </div>
   );

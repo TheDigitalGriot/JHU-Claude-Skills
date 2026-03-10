@@ -46,8 +46,10 @@ export function FormulaBar() {
   }, [payload, state.activeStepIndex]);
 
   if (!payload) return null;
+  const activeStep = payload.steps[state.activeStepIndex];
+  const hasActiveStep = activeStep && activeStep.highlightIds.length > 0;
   return (
-    <div className={styles.bar}>
+    <div className={`${styles.bar} ${hasActiveStep ? styles.hasActiveStep : ''}`}>
       <div className={styles.formula} ref={formulaRef} />
       <div className={styles.description}>{payload.formula.description}</div>
     </div>

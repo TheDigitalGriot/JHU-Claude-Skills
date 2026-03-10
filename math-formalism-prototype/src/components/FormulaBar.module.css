@@ -1,7 +1,28 @@
 .bar { padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); text-align: center; }
 .formula { font-size: 20px; min-height: 40px; }
 .description { font-size: 11px; color: #888; margin-top: 4px; }
+
 /* Annotation colors are applied via JS (inline style --highlight-color) */
-.bar :global([data-annotation-id]) { color: var(--highlight-color, inherit); transition: text-shadow 0.3s ease; }
-/* Highlight active annotations */
-.bar :global([data-annotation-id].active) { text-shadow: 0 0 8px var(--highlight-color, currentColor); }
+.bar :global([data-annotation-id]) {
+  color: var(--highlight-color, inherit);
+  transition: opacity 0.35s ease, text-shadow 0.35s ease, filter 0.35s ease, color 0.35s ease;
+}
+
+/* When a step is active, dim all annotations by default (spotlight effect) */
+.bar.hasActiveStep :global([data-annotation-id]) {
+  opacity: 0.25;
+  color: #555;
+  text-shadow: none;
+  filter: none;
+}
+
+/* Spotlight: active annotations pop with vivid color + glow */
+.bar.hasActiveStep :global([data-annotation-id].active) {
+  opacity: 1;
+  color: var(--highlight-color, inherit);
+  font-weight: 700;
+  text-shadow:
+    0 0 8px var(--highlight-color, currentColor),
+    0 0 20px color-mix(in srgb, var(--highlight-color, currentColor) 40%, transparent);
+  filter: drop-shadow(0 0 4px var(--highlight-color, currentColor));
+}

@@ -1,3 +1,19 @@
 .panel { flex: 1; display: flex; flex-direction: column; background: #0f0f1a; min-width: 0; }
-.contentArea { flex: 1; display: flex; min-height: 0; }
+
+/* Scrollycoding split: scrollable steps left, sticky graph right */
+.contentArea {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Right column: graph stays sticky while steps scroll */
+.stickyRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .empty { flex: 1; display: flex; align-items: center; justify-content: center; color: #444; font-size: 14px; }

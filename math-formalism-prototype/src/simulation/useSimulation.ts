@@ -70,6 +70,7 @@ function reducer(state: SimulationState, action: SimulationAction): SimulationSt
 export function useSimulation() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const cancelRef = useRef<(() => void) | null>(null);
+  const scrollToStepRef = useRef<((index: number) => void) | null>(null);
 
   const startSimulation = useCallback((scenario: Scenario) => {
     cancelRef.current?.();
@@ -111,6 +112,7 @@ export function useSimulation() {
     updateParameter,
     togglePlay,
     toggleToolExpand,
+    scrollToStepRef,
     dispatch,
   };
 }

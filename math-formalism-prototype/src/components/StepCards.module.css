@@ -1,9 +1,73 @@
-.panel { width: 45%; padding: 16px; overflow-y: auto; border-right: 1px solid rgba(255, 255, 255, 0.06); }
-.card { border-left: 3px solid rgba(255, 255, 255, 0.1); border-radius: 0 8px 8px 0; padding: 12px; margin-bottom: 12px; background: rgba(255, 255, 255, 0.03); opacity: 0.5; cursor: pointer; transition: all 0.3s ease; }
-.card:hover { opacity: 0.8; }
-.cardActive { border-left-color: #6366f1; background: rgba(99, 102, 241, 0.1); opacity: 1; }
-.stepLabel { font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase; }
+/* Scrollycoding step column — tall scrollable area */
+.panel {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Each card has generous vertical padding to create scroll distance */
+.card {
+  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 8px 8px 0;
+  padding: 24px 16px;
+  margin-bottom: 8px;
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity 0.4s ease, border-left-color 0.4s ease, background 0.4s ease;
+}
+
+.card:hover { opacity: 0.6; }
+
+.cardActive {
+  border-left-color: #6366f1;
+  background: rgba(99, 102, 241, 0.08);
+  opacity: 1;
+}
+
+.stepLabel { font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; transition: color 0.3s ease; }
 .stepLabelActive { color: #a78bfa; }
-.title { font-size: 13px; font-weight: 500; margin: 4px 0; color: #e0e0e0; }
-.narrative { font-size: 12px; color: #aaa; line-height: 1.4; }
-.algebra { font-size: 11px; margin-top: 8px; padding: 6px 8px; background: rgba(0, 0, 0, 0.2); border-radius: 4px; overflow-x: auto; }
+
+.title { font-size: 14px; font-weight: 600; margin: 6px 0; color: #e0e0e0; }
+
+.narrative {
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.5;
+  margin-top: 4px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+}
+.narrativeActive {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+.algebra {
+  font-size: 11px;
+  margin-top: 0;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow-x: auto;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+}
+.algebraActive {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+/* Spacer so last card can scroll into the center of the viewport */
+.bottomSpacer { min-height: 50vh; }
