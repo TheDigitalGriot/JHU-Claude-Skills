@@ -35,6 +35,70 @@ const GraphStateSchema = z.object({
     .optional(),
 });
 
+// ─── Scene & Transition Schemas (V2) ───
+
+const PrimitiveTypeSchema = z.enum([
+  "particles-scatter",
+  "particles-cluster",
+  "tree-partition",
+  "flow-arrows",
+  "bell-curve-form",
+  "split-classify",
+  "heatmap-pulse",
+  "axis-scale",
+  "icon-flow",
+  "outlier-isolate",
+  "confidence-band",
+  "matrix-grid",
+]);
+
+const VisualHintSchema = z.object({
+  primitive: PrimitiveTypeSchema,
+  config: z
+    .object({
+      count: z.number().optional(),
+      color: z.string().optional(),
+      labels: z.array(z.string()).optional(),
+      delay: z.number().optional(),
+    })
+    .catchall(z.unknown())
+    .optional(),
+});
+
+const SceneDirectiveSchema = z.object({
+  type: z.enum(["scene-setter", "explainer"]),
+  narrative: z.string(),
+  visualHints: z.array(VisualHintSchema),
+  duration: z.number().optional(),
+  mood: z.enum(["dramatic", "calm", "urgent", "analytical"]).optional(),
+});
+
+const MorphTypeSchema = z.enum(["interpolate", "crossfade", "stagger-enter", "none"]);
+
+const StepTransitionSchema = z.object({
+  morph: MorphTypeSchema,
+  duration: z.number().optional(),
+  easing: z.string().optional(),
+  delay: z.number().optional(),
+});
+
+const TransitionDefaultsSchema = z.object({
+  morph: MorphTypeSchema,
+  duration: z.number(),
+  easing: z.string(),
+});
+
+const GraphTypeSchema = z.enum([
+  "function-plot",
+  "vector-field",
+  "distribution",
+  "scatter",
+  "bar",
+  "surface-3d",
+]);
+
+// ─── Payload Schema (supports both V1 and V2) ───
+
 const FormulaPayloadSchema = z.object({
   formula: z.object({
     latex: z.string(),
@@ -62,9 +126,12 @@ const FormulaPayloadSchema = z.object({
       id: z.string(),
       title: z.string(),
       narrative: z.string(),
-      algebraDetail: z.string(),
-      highlightIds: z.array(z.string()),
+      algebraDetail: z.string().optional(),
+      highlightIds: z.array(z.string()).optional(),
+      graphType: GraphTypeSchema.optional(),
       graphState: GraphStateSchema,
+      interstitial: SceneDirectiveSchema.optional(),
+      transition: StepTransitionSchema.optional(),
     }),
   ),
   parameters: z.array(
@@ -78,16 +145,11 @@ const FormulaPayloadSchema = z.object({
     }),
   ),
   graph: z.object({
-    type: z.enum([
-      "function-plot",
-      "vector-field",
-      "distribution",
-      "scatter",
-      "bar",
-      "surface-3d",
-    ]),
+    type: GraphTypeSchema,
     config: z.record(z.string(), z.unknown()),
   }),
+  loadingScene: SceneDirectiveSchema.optional(),
+  transitions: TransitionDefaultsSchema.optional(),
 });
 
 export function createServer(): McpServer {

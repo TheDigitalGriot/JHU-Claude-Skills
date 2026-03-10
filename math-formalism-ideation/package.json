@@ -12,13 +12,15 @@
     "build": "tsc --noEmit && cross-env INPUT=mcp-app.html vite build",
     "serve": "tsx main.ts",
     "start": "cross-env NODE_ENV=development npm run build && npm run serve",
-    "serve:stdio": "tsx main.ts --stdio"
+    "serve:stdio": "tsx main.ts --stdio",
+    "demo": "tsx demo.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.72",
     "@modelcontextprotocol/ext-apps": "^1.2.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "cors": "^2.8.6",

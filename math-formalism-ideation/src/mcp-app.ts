@@ -186,8 +186,25 @@ const graphContainer = document.getElementById("graph-container")!;
 const scrollPanel = document.getElementById("scroll-panel")!;
 initStage(graphContainer, scrollPanel);
 
-// Connect to host
+// Connect to host — with standalone fallback for browser preview
 app.connect().then(() => {
   const ctx = app.getHostContext();
   if (ctx) handleHostContextChanged(ctx);
 });
+
+// If not inside an MCP host (standalone browser), try loading a saved payload
+// after a short delay to let app.connect() attempt first
+setTimeout(async () => {
+  if (currentPayload) return; // Already got data from MCP host
+  try {
+    const res = await fetch("/api/payload");
+    if (!res.ok) return;
+    const payload = await res.json() as FormulaPayloadV2;
+    if (payload?.formula && !currentPayload) {
+      console.log("[Standalone] Loading saved payload from /api/payload");
+      await renderPayload(payload);
+    }
+  } catch {
+    // Not running standalone or no payload available — that's fine
+  }
+}, 1000);
