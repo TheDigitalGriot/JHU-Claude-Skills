@@ -1,0 +1,177 @@
+<h2>Layout Design — Split-Screen Chat + Visualization</h2>
+<p class="subtitle">Section 1 of 4: Overall layout and component tree</p>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Chat Panel (Left ~40%)</div>
+    <div class="mockup-body" style="padding: 0; background: #1a1a2e; color: #e0e0e0; font-family: system-ui; min-height: 400px; display: flex; flex-direction: column;">
+      <!-- Header -->
+      <div style="padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 8px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #d4a574, #c4956a); display: flex; align-items: center; justify-content: center; font-size: 14px;">✦</div>
+        <span style="font-weight: 600; font-size: 14px;">Claude</span>
+        <span style="font-size: 11px; color: #888; margin-left: auto;">Math Formalism Ideation</span>
+      </div>
+
+      <!-- Messages area -->
+      <div style="flex: 1; padding: 16px; overflow-y: auto;">
+        <!-- Claude greeting -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #d4a574, #c4956a); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px;">✦</div>
+          <div style="background: rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.5; max-width: 85%;">
+            I can help you explore mathematical concepts visually. Try asking about a formula or concept!
+          </div>
+        </div>
+
+        <!-- User message -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px; justify-content: flex-end;">
+          <div style="background: rgba(99, 102, 241, 0.2); border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.5; max-width: 85%;">
+            Explain exponential decay and show me how the decay constant affects the curve
+          </div>
+        </div>
+
+        <!-- Claude thinking -->
+        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #d4a574, #c4956a); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px;">✦</div>
+          <div style="font-size: 12px; color: #888; padding: 6px 0;">
+            <span style="color: #a78bfa;">●</span> Thinking...
+          </div>
+        </div>
+
+        <!-- Tool call indicator -->
+        <div style="margin-left: 32px; margin-bottom: 12px; background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 8px; padding: 8px 12px; font-size: 12px;">
+          <div style="display: flex; align-items: center; gap: 6px; color: #a78bfa; cursor: pointer;">
+            <span>▶</span>
+            <span style="font-weight: 500;">Using Visualize Formula</span>
+            <span style="color: #666; font-size: 11px; margin-left: auto;">click to expand</span>
+          </div>
+        </div>
+
+        <!-- Claude response -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: transparent; flex-shrink: 0;"></div>
+          <div style="background: rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.5; max-width: 85%;">
+            Exponential decay describes how a quantity decreases over time at a rate proportional to its current value...<span style="animation: blink 1s infinite; color: #a78bfa;">|</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input area -->
+      <div style="padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+        <div style="display: flex; gap: 8px;">
+          <select style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #ccc; padding: 8px 10px; font-size: 12px; min-width: 140px;">
+            <option>Exponential Decay</option>
+            <option>Normal Distribution</option>
+          </select>
+          <div style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #888;">
+            Or type a custom prompt...
+          </div>
+          <button style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 8px; color: white; padding: 8px 16px; font-size: 13px; cursor: pointer;">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">Visualization Panel (Right ~60%)</div>
+    <div class="mockup-body" style="padding: 0; background: #0f0f1a; color: #e0e0e0; font-family: system-ui; min-height: 400px; display: flex; flex-direction: column;">
+      <!-- Formula bar -->
+      <div style="padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: center;">
+        <div style="font-size: 20px; font-family: serif; letter-spacing: 1px;">
+          <span style="color: #60a5fa;">N(t)</span> = <span style="color: #34d399;">N₀</span> · <span style="color: #f472b6;">e<sup>−λt</sup></span>
+        </div>
+        <div style="font-size: 11px; color: #888; margin-top: 4px;">Exponential Decay: Radioactive substance mass over time</div>
+      </div>
+
+      <!-- Main viz area -->
+      <div style="flex: 1; display: flex;">
+        <!-- Steps panel -->
+        <div style="width: 45%; padding: 16px; overflow-y: auto; border-right: 1px solid rgba(255,255,255,0.06);">
+          <div style="background: rgba(99, 102, 241, 0.1); border-left: 3px solid #6366f1; border-radius: 0 8px 8px 0; padding: 12px; margin-bottom: 12px;">
+            <div style="font-size: 11px; color: #a78bfa; font-weight: 600; text-transform: uppercase;">Step 1</div>
+            <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">The Initial Condition</div>
+            <div style="font-size: 12px; color: #aaa; line-height: 1.4;">At time t=0, we start with N₀ units of our substance...</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border-left: 3px solid rgba(255,255,255,0.1); border-radius: 0 8px 8px 0; padding: 12px; margin-bottom: 12px; opacity: 0.6;">
+            <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Step 2</div>
+            <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">The Decay Constant λ</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border-left: 3px solid rgba(255,255,255,0.1); border-radius: 0 8px 8px 0; padding: 12px; margin-bottom: 12px; opacity: 0.4;">
+            <div style="font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase;">Step 3</div>
+            <div style="font-size: 13px; font-weight: 500; margin: 4px 0;">The Exponential Decay Curve</div>
+          </div>
+        </div>
+
+        <!-- Graph area -->
+        <div style="width: 55%; padding: 16px; display: flex; flex-direction: column;">
+          <div style="flex: 1; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; position: relative;">
+            <!-- Fake axis lines -->
+            <div style="position: absolute; bottom: 30px; left: 40px; right: 20px; height: 1px; background: rgba(255,255,255,0.15);"></div>
+            <div style="position: absolute; bottom: 30px; left: 40px; top: 20px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+            <!-- Fake curve -->
+            <svg viewBox="0 0 200 120" style="width: 80%; height: 70%; margin-top: -10px;">
+              <path d="M 10 20 Q 40 22 60 40 Q 80 58 100 70 Q 130 85 160 92 Q 180 96 190 98" stroke="#6366f1" stroke-width="2.5" fill="none" opacity="0.9"/>
+              <circle cx="10" cy="20" r="4" fill="#34d399"/>
+              <text x="14" y="16" fill="#34d399" font-size="8">N₀</text>
+            </svg>
+            <div style="position: absolute; bottom: 10px; right: 20px; font-size: 10px; color: #666;">Time (t)</div>
+            <div style="position: absolute; top: 10px; left: 10px; font-size: 10px; color: #666; writing-mode: vertical-lr; transform: rotate(180deg);">N(t)</div>
+          </div>
+
+          <!-- Sliders -->
+          <div style="margin-top: 12px; display: flex; gap: 16px;">
+            <div style="flex: 1;">
+              <div style="font-size: 11px; color: #888; margin-bottom: 4px;">Initial mass (N₀): <span style="color: #34d399;">100</span></div>
+              <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; position: relative;">
+                <div style="width: 50%; height: 100%; background: #34d399; border-radius: 2px;"></div>
+              </div>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-size: 11px; color: #888; margin-bottom: 4px;">Decay constant (λ): <span style="color: #f472b6;">0.30</span></div>
+              <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; position: relative;">
+                <div style="width: 15%; height: 100%; background: #f472b6; border-radius: 2px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step controls -->
+      <div style="padding: 10px 16px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 12px;">
+        <button style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #888; padding: 4px 12px; font-size: 12px;">◀ Prev</button>
+        <span style="color: #888;">Step 1 of 4</span>
+        <button style="background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 6px; color: #a78bfa; padding: 4px 12px; font-size: 12px;">Next ▶</button>
+        <button style="background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 6px; color: #a78bfa; padding: 4px 12px; font-size: 12px;">▶ Play</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 1.5rem;">
+  <h3>Component Tree</h3>
+  <pre style="background: rgba(255,255,255,0.04); padding: 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; color: #ccc; overflow-x: auto;">
+App
+├── ChatPanel
+│   ├── MessageList
+│   │   ├── UserMessage
+│   │   ├── AssistantMessage (typewriter effect)
+│   │   └── ToolCallBlock (expandable, shows JSON payload)
+│   └── InputBar
+│       ├── PayloadSelector (dropdown: Exponential Decay | Normal Distribution)
+│       └── SubmitButton
+├── VisualizationPanel
+│   ├── FormulaBar (KaTeX rendered, highlighted annotations)
+│   ├── ContentArea
+│   │   ├── StepCards (scrollable, active state synced)
+│   │   └── GraphPanel (Observable Plot, interactive)
+│   ├── ParameterSliders
+│   └── StepControls (prev/next/play)
+└── SimulationEngine (non-visual)
+    ├── payloads/ (JSON files)
+    ├── scripts/ (pre-written chat sequences)
+    └── timing logic (delays for realism)
+  </pre>
+</div>
+
+<style>
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+</style>

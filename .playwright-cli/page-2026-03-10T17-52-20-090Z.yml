@@ -1,0 +1,20 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: ✦
+      - generic [ref=e7]: Claude
+      - generic [ref=e8]: Math Formalism Ideation
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: ✦
+        - generic [ref=e12]: I can help you explore mathematical concepts visually. Choose a formula from the dropdown or describe a concept you'd like to visualize!
+      - generic [ref=e19]: Explain exponential decay and show me how the decay constant affects the curve
+      - generic [ref=e20]:
+        - generic [ref=e21]: ✦
+        - generic [ref=e22]: ● I'll create an interactive visualization of exponential decay, showing how N(t) = N₀·e^(-λt) behaves as we vary the decay constant λ...
+    - generic [ref=e13]:
+      - combobox [disabled] [ref=e14] [cursor=pointer]:
+        - option "Exponential Decay" [selected]
+        - option "Normal Distribution"
+      - button "Submit" [disabled] [ref=e15]
+  - generic [ref=e17]: Submit a prompt to see the visualization
