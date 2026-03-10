@@ -1,0 +1,7 @@
+.bar { padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); text-align: center; }
+.formula { font-size: 20px; min-height: 40px; }
+.description { font-size: 11px; color: #888; margin-top: 4px; }
+/* Annotation colors are applied via JS (inline style --highlight-color) */
+.bar :global([data-annotation-id]) { color: var(--highlight-color, inherit); transition: text-shadow 0.3s ease; }
+/* Highlight active annotations */
+.bar :global([data-annotation-id].active) { text-shadow: 0 0 8px var(--highlight-color, currentColor); }
