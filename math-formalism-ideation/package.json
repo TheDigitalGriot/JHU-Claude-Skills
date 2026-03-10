@@ -21,8 +21,8 @@
   "dependencies": {
     "@modelcontextprotocol/ext-apps": "^1.2.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "@observablehq/plot": "^0.6.17",
     "cors": "^2.8.6",
+    "d3": "^7.9.0",
     "express": "^5.2.1",
     "gsap": "^3.14.2",
     "katex": "^0.16.38",
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
+    "@types/d3": "^7.4.3",
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.5",
     "concurrently": "^9.2.1",
