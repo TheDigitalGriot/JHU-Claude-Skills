@@ -204,8 +204,8 @@ interface FormulaPayload {
   steps: StepV2[];           // Modified: steps now include motion directives
 
   // NEW
-  loadingScene: SceneDirective;     // Scene setter for the loading state
-  transitions: TransitionDefaults;  // Default transition config
+  loadingScene?: SceneDirective;     // Scene setter for the loading state (optional — fallback to domain preset)
+  transitions?: TransitionDefaults;  // Default transition config (optional — defaults to interpolate/800ms/power2.inOut)
 }
 ```
 
