@@ -299,3 +299,59 @@ html, body {
   color: var(--color-text-secondary);
   font-style: italic;
 }
+
+/* === STAGE STATES === */
+
+/* Scene narrative overlay */
+.scene-narrative-overlay {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Disabled sliders during interstitial */
+.sliders-container.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.sliders-container.disabled input[type="range"] {
+  cursor: not-allowed;
+}
+
+/* D3 chart styling */
+.chart-axes text {
+  fill: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.chart-axes line,
+.chart-axes path {
+  stroke: var(--color-text-secondary);
+}
+
+.chart-marks {
+  /* marks layer */
+}
+
+/* Scene group narrative text */
+.scene-narrative {
+  font-family: var(--font-sans);
+}
+
+/* Step card transition for interstitial active */
+.step-card.interstitial-active {
+  border-color: var(--color-ring-primary);
+  background: var(--color-background-secondary);
+}
+
+/* Sticky panel relative positioning for overlay */
+.sticky-panel {
+  position: relative;
+}
