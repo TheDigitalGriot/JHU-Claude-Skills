@@ -44,7 +44,7 @@ npm run demo -- "Visualize the central limit theorem"
 
 A simulated agentic chat interface where pre-authored scenario files drive a timed sequence: thinking indicator, tool call block, streaming response, and synchronized visualization. No API keys needed.
 
-https://github.com/TheDigitalGriot/JHU-Claude-Skills/raw/main/assets/math-formula-demo-github.mp4
+<video src="https://github.com/TheDigitalGriot/JHU-Claude-Skills/raw/main/assets/math-formula-demo-github.mp4" controls width="100%"></video>
 
 **Stack:** React 19, TypeScript, Vite, KaTeX, Observable Plot, GSAP, math.js
 
